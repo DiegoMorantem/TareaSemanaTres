@@ -42,4 +42,34 @@ INSERT INTO producto (nombre, descripcion, precio, categoria_id) VALUES
     ('Manta suave', 'Manta acogedora para el hogar', 34.99, 3),
     ('Bicicleta de montaña', 'Bicicleta robusta para terrenos difíciles', 599.99, 4);
 
-select * from producto;
+-- Crear la tabla usuario
+CREATE TABLE usuario (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla rol
+CREATE TABLE rol (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion TEXT,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la tabla intermedia usuario_rol
+CREATE TABLE usuario_rol (
+    usuario_id INTEGER REFERENCES usuario(id),
+    rol_id INTEGER REFERENCES rol(id),
+    PRIMARY KEY (usuario_id, rol_id)
+);
+
+-- Insertar datos en la tabla "rol"
+INSERT INTO rol (nombre, descripcion) VALUES
+    ('ADMIN', 'Administrador del Sistema'),
+    ('USER', 'Usuario estandar'),
+    ('Moderador', 'Moderador de contenido');
