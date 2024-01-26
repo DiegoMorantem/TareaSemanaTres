@@ -8,8 +8,12 @@ app.use(express.urlencoded({extended: false}));
 //routes
 app.use(require('./routes/categoria'));
 app.use(require('./routes/producto'));
-app.use(require('./routes/usuario'));  // Agrega las rutas de usuario
-app.use(require('./routes/rol'));      // Agrega las rutas de rol
+app.use(require('./routes/usuario'));  
+app.use(require('./routes/rol')); 
+app.use(require('./routes/asignar_rol'));
+app.use(require('./routes/bodega'));
+app.use(require('./routes/repartidor')); 
+app.use(require('./routes/asignar_repartidor'));
 
 app.listen(3000);
 console.log('Server on port 3000');

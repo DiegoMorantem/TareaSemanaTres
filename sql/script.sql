@@ -73,3 +73,58 @@ INSERT INTO rol (nombre, descripcion) VALUES
     ('ADMIN', 'Administrador del Sistema'),
     ('USER', 'Usuario estandar'),
     ('Moderador', 'Moderador de contenido');
+
+CREATE TABLE bodega (
+  	id SERIAL PRIMARY KEY,
+ 	nombre VARCHAR(50) NOT NULL,
+ 	direccion VARCHAR(255) NOT NULL,
+	telefono VARCHAR(15) NOT NULL,
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  	updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE repartidor (
+  	id SERIAL PRIMARY KEY,
+  	nombres VARCHAR(100) NOT NULL,
+  	apellidos VARCHAR(100) NOT NULL,
+	nro_documento VARCHAR(15) NOT NULL,
+	telefono VARCHAR(15) NOT NULL,
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crea una nueva tabla de relación
+CREATE TABLE bodega_repartidor (
+  	bodega_id INT REFERENCES bodega(id),
+  	repartidor_id INT REFERENCES repartidor(id),
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  	updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  	PRIMARY KEY (bodega_id, repartidor_id)
+);
+
+CREATE TABLE cliente (
+ 	id SERIAL PRIMARY KEY,
+  	nombres VARCHAR(100) NOT NULL,
+  	apellidos VARCHAR(100) NOT NULL,
+	nro_documento VARCHAR(15) NOT NULL,
+	telefono VARCHAR(15) NOT NULL,
+	direccion VARCHAR(255) NOT NULL,
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  	updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de orden con referencias a bodega_repartidor
+CREATE TABLE orden (
+  	id SERIAL PRIMARY KEY,
+  	producto_id INT REFERENCES producto(id),
+  	cantidad INT NOT NULL,
+  	bodega_id INT REFERENCES bodega(id),
+  	repartidor_id INT REFERENCES repartidor(id),
+  	cliente_id INT REFERENCES cliente(id),
+  	estado_entrega VARCHAR(50) NOT NULL,
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  	updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  	FOREIGN KEY (bodega_id, repartidor_id) REFERENCES bodega_repartidor(bodega_id, repartidor_id)
+);
+
+select * from repartidor;
