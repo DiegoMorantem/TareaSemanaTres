@@ -14,6 +14,7 @@ app.use(require('./routes/asignar_rol'));
 app.use(require('./routes/bodega'));
 app.use(require('./routes/repartidor')); 
 app.use(require('./routes/asignar_repartidor'));
+app.use(require('./routes/orden'));
 
 app.listen(3000);
 console.log('Server on port 3000');
